@@ -17,12 +17,17 @@ import argcomplete
 
 
 def get_zsh_system_dir():
-    return "/usr/local/share/zsh/site-functions"
+    if os.path.exists("/usr/share/zsh/site-functions"):
+        return "/usr/share/zsh/site-functions"
+    else:
+        return "/usr/local/share/zsh/site-functions"
 
 
 def get_bash_system_dir():
     if "BASH_COMPLETION_COMPAT_DIR" in os.environ:
         return os.environ["BASH_COMPLETION_COMPAT_DIR"]
+    elif os.path.exists("/usr/share/bash-completion/completions"):
+        return "/usr/share/bash-completion/completions"
     elif os.path.exists("/etc/bash_completion.d"):
         return "/etc/bash_completion.d"
     else:
